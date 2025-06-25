@@ -30,21 +30,6 @@ export const PersonData: React.FC<Props> = ({ allPeople }) => {
             <td>{person.born}</td>
             <td>{person.died}</td>
 
-            {/* {mather ?
-              <td>
-                <Link
-                  to={`#/people/${mather.slug}`}
-                  className={cn({
-                    'has-text-danger': allPeople.find(
-                      some => some.name === person.motherName,
-                    ),
-                  })}
-                >
-                {person.motherName}
-              </Link>
-              {person.motherName}
-            </td>} */}
-
 
             {mother ?
               <td>
@@ -53,24 +38,14 @@ export const PersonData: React.FC<Props> = ({ allPeople }) => {
                 </Link>
               </td>
               :
-              <td>{person.motherName}</td> || <td>'-'</td>
+              <td>{person.motherName || '-'}</td>
             }
-
 
             {father ?
               <td><Link to={`#/people/${father.slug}`}>{person.fatherName}</Link></td>
               :
-              <td>{person.fatherName}</td> || '-'
+              <td>{person.fatherName || '-'}</td>
             }
-
-
-
-
-
-
-
-
-
           </tr>
         );
       })}
