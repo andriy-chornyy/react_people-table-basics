@@ -1,24 +1,37 @@
-import { Person } from "../types";
 
+import { Person } from "../types";
+import cn from 'classnames';
+import { Link } from "react-router-dom";
 type Props = {
   allPeople: Person[];
 };
 
 export const PersonData: React.FC<Props> = ({ allPeople }) => {
+
   return (
     <tbody>
       {allPeople.map(person => (
         <tr data-cy="person" key={person.slug}>
           <td>
-            <a href={`#/people/${person.slug}`}>
+
+            <Link to={`#/people/${person.slug}`} className={cn({'has-text-danger': person.sex === 'f'})}>
               {person.name}
-            </a>
+            </Link>
+
+
           </td>
           <td>{person.sex}</td>
           <td>{person.born}</td>
           <td>{person.died}</td>
-          <td>{person.motherName}</td>
+
+          <td className={cn({ 'has-text-danger': allPeople.find(some => some.name === person.motherName) })}
+          >
+          {person.motherName}
+          </td>
+
           <td>{person.fatherName}</td>
+
+
         </tr>
       ))}
     </tbody>

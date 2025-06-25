@@ -1,33 +1,43 @@
+import { Outlet } from 'react-router-dom';
 import { Person } from '../types';
 import { Loader } from './Loader';
 import { PersonData } from './Person';
 
 type Props = {
   allPeople: Person[];
-}
+  hasError: boolean;
+  isEmpty: boolean;
+  isLoading: boolean;
+};
 
-export const PeoplePage: React.FC<Props> = ({allPeople}) => {
-
+export const PeoplePage: React.FC<Props> = ({
+  allPeople,
+  hasError,
+  isEmpty,
+  isLoading,
+}) => {
   return (
+    <>
+      {/* <div className="section"> */}
+        <Outlet />
+      {/* </div> */}
+      {/* <h1 className="title">People Page</h1> */}
 
-    <main className="section">
-      <div className="container">
-        <h1 className="title">Home Page</h1>
-        <h1 className="title">People Page</h1>
-        <h1 className="title">Page not found</h1>
-
-        <div className="block">
-          <div className="box table-container">
-            <Loader />
-
+      <div className="block">
+        <div className="box table-container">
+          {hasError && (
             <p data-cy="peopleLoadingError" className="has-text-danger">
               Something went wrong
             </p>
+          )}
 
-            <p data-cy="noPeopleMessage">
-              There are no people on the server
-            </p>
+          {isEmpty && (
+            <p data-cy="noPeopleMessage">There are no people on the server</p>
+          )}
 
+          {isLoading ? (
+            <Loader />
+          ) : (
             <table
               data-cy="peopleTable"
               className="table is-striped is-hoverable is-narrow is-fullwidth"
@@ -43,13 +53,11 @@ export const PeoplePage: React.FC<Props> = ({allPeople}) => {
                 </tr>
               </thead>
 
-
-              <PersonData allPeople={allPeople}/>
-
+              <PersonData allPeople={allPeople} />
             </table>
-          </div>
+          )}
         </div>
       </div>
-    </main>
-  )
-}
+    </>
+  );
+};

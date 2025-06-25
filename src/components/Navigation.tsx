@@ -1,4 +1,9 @@
+import classNames from "classnames";
+import {NavLink } from "react-router-dom";
+
 type Props = {};
+
+const getLinkClass = ({ isActive }: {isActive: boolean}) => classNames("navbar-item", { "has-background-grey-lighter": isActive })
 
 export const Navigation: React.FC<Props> = () => {
 
@@ -12,13 +17,13 @@ export const Navigation: React.FC<Props> = () => {
   >
     <div className="container">
       <div className="navbar-brand">
-        <a className="navbar-item" href="#/">
+        <NavLink to="/" className={getLinkClass}>
           Home
-        </a>
+        </NavLink>
 
-        <a className="navbar-item has-background-grey-lighter" href="#/people">
+        <NavLink to="/people" className={getLinkClass}>
           People
-        </a>
+        </NavLink>
       </div>
     </div>
   </nav>
