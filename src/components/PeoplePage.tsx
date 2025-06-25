@@ -2,26 +2,43 @@ import { Outlet } from 'react-router-dom';
 import { Person } from '../types';
 import { Loader } from './Loader';
 import { PersonData } from './Person';
+import { useEffect, useState } from 'react'
+import { getPeople } from '../api';
 
-type Props = {
-  allPeople: Person[];
-  hasError: boolean;
-  isEmpty: boolean;
-  isLoading: boolean;
-};
+type Props = {};
 
 export const PeoplePage: React.FC<Props> = ({
-  allPeople,
-  hasError,
-  isEmpty,
-  isLoading,
+
 }) => {
+  const [allPeople, setAllPeople] = useState<Person[]>([]);
+  const [hasError, setHasError] = useState(false);
+  const [isEmpty, setIsEmpty] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    getPeople()
+      .then(data => {
+        if (data.length === 0) {
+          setIsEmpty(true);
+          setHasError(false);
+        } else {
+          setAllPeople(data);
+          setIsEmpty(false);
+          setHasError(false);
+        }
+      })
+      .catch(() => {
+        setHasError(true);
+        setIsEmpty(false);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      })
+  }, []);
+
   return (
     <>
-      {/* <div className="section"> */}
-        <Outlet />
-      {/* </div> */}
-      {/* <h1 className="title">People Page</h1> */}
+      <Outlet />
 
       <div className="block">
         <div className="box table-container">
