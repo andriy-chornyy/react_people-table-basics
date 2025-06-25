@@ -19,7 +19,7 @@ export const PersonData: React.FC<Props> = ({ allPeople }) => {
             data-cy="person"
             key={person.slug}
             className={cn({
-              'has-background-warning': person.slug === slug
+              'has-background-warning': person.slug === slug,
             })}
           >
             <td>
@@ -35,22 +35,26 @@ export const PersonData: React.FC<Props> = ({ allPeople }) => {
             <td>{person.born}</td>
             <td>{person.died}</td>
 
-
-            {mother ?
+            {mother ? (
               <td>
-                <Link to={`/people/${mother.slug}`}  className={cn({ 'has-text-danger': mother.sex === 'f' })}>
+                <Link
+                  to={`/people/${mother.slug}`}
+                  className={cn({ 'has-text-danger': mother.sex === 'f' })}
+                >
                   {person.motherName}
                 </Link>
               </td>
-              :
+            ) : (
               <td>{person.motherName || '-'}</td>
-            }
+            )}
 
-            {father ?
-              <td><Link to={`/people/${father.slug}`}>{person.fatherName}</Link></td>
-              :
+            {father ? (
+              <td>
+                <Link to={`/people/${father.slug}`}>{person.fatherName}</Link>
+              </td>
+            ) : (
               <td>{person.fatherName || '-'}</td>
-            }
+            )}
           </tr>
         );
       })}

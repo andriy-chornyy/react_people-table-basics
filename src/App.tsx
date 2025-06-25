@@ -7,7 +7,6 @@ import { NotFoundPage } from './components/NotFoundPage';
 import { HomePage } from './components/HomePage';
 
 export const App = () => {
-
   return (
     <>
       <Navigation />
@@ -19,17 +18,11 @@ export const App = () => {
 
               <Route path="/" element={<HomePage />} />
 
-              <Route
-                path="/people/:slug?"
-                element={
-                  <PeoplePage/>
-                }
-              >
+              <Route path="/people/:slug?" element={<PeoplePage />}>
                 <Route
                   index
-                  element={<h1 className="title"> People Page</h1>}
+                  element={<h1 className="title">People Page</h1>}
                 />
-
               </Route>
 
               <Route path="*" element={<NotFoundPage />} />

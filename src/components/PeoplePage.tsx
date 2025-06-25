@@ -2,14 +2,12 @@ import { Outlet } from 'react-router-dom';
 import { Person } from '../types';
 import { Loader } from './Loader';
 import { PersonData } from './Person';
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
 import { getPeople } from '../api';
 
 type Props = {};
 
-export const PeoplePage: React.FC<Props> = ({
-
-}) => {
+export const PeoplePage: React.FC<Props> = ({}) => {
   const [allPeople, setAllPeople] = useState<Person[]>([]);
   const [hasError, setHasError] = useState(false);
   const [isEmpty, setIsEmpty] = useState(false);
@@ -33,7 +31,7 @@ export const PeoplePage: React.FC<Props> = ({
       })
       .finally(() => {
         setIsLoading(false);
-      })
+      });
   }, []);
 
   return (
