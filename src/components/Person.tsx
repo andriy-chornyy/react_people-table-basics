@@ -1,7 +1,6 @@
-
-import { Person } from "../types";
+import { Person } from '../types';
 import cn from 'classnames';
-import { Link } from "react-router-dom";
+import { Link, Route, Routes } from 'react-router-dom';
 type Props = {
   allPeople: Person[];
 };
@@ -10,36 +9,77 @@ export const PersonData: React.FC<Props> = ({ allPeople }) => {
 
   return (
     <tbody>
-      {allPeople.map(person => (
-        <tr data-cy="person" key={person.slug}>
-          <td>
+      {allPeople.map(person => {
+        const father = allPeople.find(m => m.name === person.fatherName);
+        const mother = allPeople.find(f => f.name === person.motherName);
 
-            <Link to={`#/people/${person.slug}`} className={cn({'has-text-danger': person.sex === 'f'})}>
-              {person.name}
-            </Link>
+        console.log('father----father', father);
+
+        return (
+          <tr data-cy="person" key={person.slug}>
+            <td>
+              <Link
+                to={`#/people/${person.slug}`}
+                className={cn({ 'has-text-danger': person.sex === 'f' })}
+              >
+                {person.name}
+              </Link>
+            </td>
+
+            <td>{person.sex}</td>
+            <td>{person.born}</td>
+            <td>{person.died}</td>
+
+            {/* {mather ?
+              <td>
+                <Link
+                  to={`#/people/${mather.slug}`}
+                  className={cn({
+                    'has-text-danger': allPeople.find(
+                      some => some.name === person.motherName,
+                    ),
+                  })}
+                >
+                {person.motherName}
+              </Link>
+              {person.motherName}
+            </td>} */}
 
 
-          </td>
-          <td>{person.sex}</td>
-          <td>{person.born}</td>
-          <td>{person.died}</td>
-
-          <td className={cn({ 'has-text-danger': allPeople.find(some => some.name === person.motherName) })}
-          >
-          {person.motherName}
-          </td>
-
-          <td>{person.fatherName}</td>
+            {mother ?
+              <td>
+                <Link to={`#/people/${mother.slug}`} className={cn({ 'has-text-danger': mother.sex === 'f' })}>
+                  {person.motherName}
+                </Link>
+              </td>
+              :
+              <td>{person.motherName}</td> || <td>'-'</td>
+            }
 
 
-        </tr>
-      ))}
+            {father ?
+              <td><Link to={`#/people/${father.slug}`}>{person.fatherName}</Link></td>
+              :
+              <td>{person.fatherName}</td> || '-'
+            }
+
+
+
+
+
+
+
+
+
+          </tr>
+        );
+      })}
     </tbody>
   );
 };
 
-
-{/*
+{
+  /*
 
 
     <tr data-cy="person">
@@ -131,7 +171,10 @@ export const PersonData: React.FC<Props> = ({ allPeople }) => {
         </a>
       </td>
     </tr>
-  </tbody> */}
+  </tbody> */
+}
 
-  {/* )
-} */}
+{
+  /* )
+} */
+}
